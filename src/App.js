@@ -1,7 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import QRCode from 'qrcode.react';
 
 function App() {
     const [formData, setFormData] = useState({ Sname: '', Alliance: '', checkboxes: Array(9).fill(false) });
+    const [barcodeData, setBarcodeData] = useState('');
+
+    useEffect(() => {
+        const generateBarcode = () => {
+            return JSON.stringify(formData);
+        };
+
+        setBarcodeData(generateBarcode());
+    }, [formData]);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -16,12 +26,6 @@ function App() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-    };
-
-    const generateBarcode = () => {
-        const jsonStr = JSON.stringify(formData);
-        const barcodeUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(jsonStr)}&size=150x150`;
-        return barcodeUrl;
     };
 
     return (
@@ -43,7 +47,7 @@ function App() {
             <Field formData={formData} handleCheckboxChange={handleCheckboxChange} />
             <br />
             <div style={{ textAlign: 'center' }}>
-                <img src={generateBarcode()} alt="QR Code" style={{ display: 'block', margin: 'auto' }} />
+                <QRCode value={barcodeData} size={150} />
             </div>
         </div>
     );
