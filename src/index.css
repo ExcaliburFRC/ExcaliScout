@@ -1,23 +1,25 @@
-form {
-    text-align: center;
-    font-family: "Assistant SemiBold";
-}
+        form {
+            text-align: center;
+            font-family: "Assistant SemiBold";
+        }
 
-h3, h1 {
-    text-align: center;
-    font-family: "Assistant SemiBold";
-}
+        h3, h1, button {
+            text-align: center;
+            font-family: "Assistant SemiBold";
+        }
 
-img {
-    max-width: 30%;
-}
+        img {
+            max-width: 30%;
+        }
 
-.center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-}
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            text-align: center;
+        }
+
 
 
 

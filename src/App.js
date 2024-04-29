@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import QRCode from 'qrcode.react';
 
 function App() {
-    const [formData, setFormData] = useState({ Sname: '', Alliance: '', checkboxes: Array(9).fill(false) });
+    const [formData, setFormData] = useState({ Name: '', Team: '', Alliance: '', checkboxes: Array(9).fill(false) });
     const [barcodeData, setBarcodeData] = useState('');
 
     useEffect(() => {
@@ -33,27 +33,34 @@ function App() {
             <h1>Scouting 2024:</h1>
             <br/>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="Sname">First name of the Scouter:</label><br />
-                <input type="text" id="Sname" name="Sname" value={formData.Sname} onChange={handleInputChange} /><br />
-                <br />
-                <label htmlFor="Alliance">Alliance:</label><br />
-                <input type="text" id="Alliance" name="Alliance" value={formData.Alliance} onChange={handleInputChange} />
-                <br />
-                <br />
+                <label htmlFor="Sname">Name of the Scouter:</label><br/>
+                <input type="text" id="Sname" name="Sname" value={formData.Sname} onChange={handleInputChange}/><br/>
+                <br/>
+                <label htmlFor="Sname">Team name of the Scouter:</label><br/>
+                <input type="number" id="Team" name="Team" value={formData.Team} onChange={handleInputChange}/><br/>
+                <br/>
+                <label htmlFor="Alliance">Alliance:</label><br/>
+                <input type="text" id="Alliance" name="Alliance" value={formData.Alliance}
+                       onChange={handleInputChange}/>
+                <br/>
             </form>
             <br/>
             <br/>
             <h3>Map for autonomous:</h3>
-            <Field formData={formData} handleCheckboxChange={handleCheckboxChange} />
-            <br />
-            <div style={{ textAlign: 'center' }}>
-                <QRCode value={barcodeData} size={150} />
+            <Field formData={formData} handleCheckboxChange={handleCheckboxChange}/>
+            <br/>
+            <div class="center">
+                <button>Submit</button>
+            </div>
+            <h3>If you offline:</h3>
+            <div style={{textAlign: 'center'}}>
+                <QRCode value={barcodeData} size={150}/>
             </div>
         </div>
     );
 }
 
-function Field({ formData, handleCheckboxChange }) {
+function Field({formData, handleCheckboxChange }) {
     return (
         <div style={{ position: 'relative' }}>
             <img src="https://www.chiefdelphi.com/uploads/default/original/3X/a/a/aa745548020a507cf4a07051dcd0faa446607840.png" alt="Field Image" className="center" />
