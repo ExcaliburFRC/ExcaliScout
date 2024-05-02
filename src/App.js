@@ -36,7 +36,7 @@ function App() {
                 <label htmlFor="Sname">Name of the Scouter:</label><br/>
                 <input type="text" id="Sname" name="Sname" value={formData.Sname} onChange={handleInputChange}/><br/>
                 <br/>
-                <label htmlFor="Sname">Team name of the Scouter:</label><br/>
+                <label htmlFor="Team">Team number of the Scouter:</label><br/>
                 <input type="number" id="Team" name="Team" value={formData.Team} onChange={handleInputChange}/><br/>
                 <br/>
                 <label htmlFor="Alliance">Alliance:</label><br/>
@@ -49,10 +49,11 @@ function App() {
             <h3>Map for autonomous:</h3>
             <Field formData={formData} handleCheckboxChange={handleCheckboxChange}/>
             <br/>
-            <div class="center">
+            <div className="center">
                 <button>Submit</button>
             </div>
-            <h3>If you offline:</h3>
+
+            <h3>If you're offline:</h3>
             <div style={{textAlign: 'center'}}>
                 <QRCode value={barcodeData} size={150}/>
             </div>
@@ -60,13 +61,16 @@ function App() {
     );
 }
 
-function Field({formData, handleCheckboxChange }) {
+function Field({formData, handleCheckboxChange}) {
     return (
-        <div style={{ position: 'relative' }}>
-            <img src="https://www.chiefdelphi.com/uploads/default/original/3X/a/a/aa745548020a507cf4a07051dcd0faa446607840.png" alt="Field Image" className="center" />
+        <div style={{position: 'relative'}}>
+            <img
+                src="https://www.chiefdelphi.com/uploads/default/original/3X/a/a/aa745548020a507cf4a07051dcd0faa446607840.png"
+                alt="Field Image" className="center"/>
             {formData.checkboxes.map((checked, index) => (
-                <div key={index} style={{ position: 'absolute', top: `${getFieldTop(index)}%`, left: `${getFieldLeft(index)}%` }}>
-                    <input type="checkbox" checked={checked} onChange={() => handleCheckboxChange(index)} />
+                <div key={index}
+                     style={{position: 'absolute', top: `${getFieldTop(index)}%`, left: `${getFieldLeft(index)}%`}}>
+                    <input type="checkbox" checked={checked} onChange={() => handleCheckboxChange(index)}/>
                 </div>
             ))}
         </div>
@@ -75,16 +79,26 @@ function Field({formData, handleCheckboxChange }) {
 
 function getFieldTop(index) {
     switch (index) {
-        case 0: return 20;
-        case 1: return 35;
-        case 2: return 50;
-        case 3: return 14.9;
-        case 4: return 30.9;
-        case 5: return 48.5;
-        case 6: return 66.9;
-        case 7: return 82.9;
-        case 8: return 30.9;
-        default: return 0;
+        case 0:
+            return 19.1;
+        case 1:
+            return 34.1;
+        case 2:
+            return 49;
+        case 3:
+            return 13.5;
+        case 4:
+            return 30.9;
+        case 5:
+            return 48.2;
+        case 6:
+            return 65.5;
+        case 7:
+            return 82.6;
+        case 8:
+            return 30.9;
+        default:
+            return 0;
     }
 }
 
@@ -92,15 +106,17 @@ function getFieldLeft(index) {
     switch (index) {
         case 0:
         case 1:
-        case 2: return 56.6;
+        case 2: return 69.26;
         case 3:
         case 4:
         case 5:
         case 6:
         case 7:
-        case 8: return 49.5;
+        case 8: return 46.8;
         default: return 0;
     }
 }
+
+
 
 export default App;
