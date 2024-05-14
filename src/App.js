@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import QRCode from 'qrcode.react';
 
 function App() {
-    const [formData, setFormData] = useState({ Name: '', Team: '', Alliance: '', checkboxes: Array(9).fill(false) });
+    const [formData, setFormData] = useState({ Name: '', Team: '', Alliance: '', TeleNotes: '', checkboxes: Array(9).fill(false) });
     const [barcodeData, setBarcodeData] = useState('');
 
     useEffect(() => {
@@ -38,6 +38,9 @@ function App() {
                 <br/>
                 <label htmlFor="Team">Team number of the Scouter:</label><br/>
                 <input type="number" id="Team" name="Team" value={formData.Team} onChange={handleInputChange}/><br/>
+                <br/>
+                <label htmlFor="TeleNotes">Teleop Notes:</label><br/>
+                <input type="number" id="TeleNotes" name="TeleNotes" onChange={handleInputChange}/><br/>
                 <br/>
                 <label htmlFor="Alliance">Alliance:</label><br/>
                 <input type="text" id="Alliance" name="Alliance" value={formData.Alliance}
