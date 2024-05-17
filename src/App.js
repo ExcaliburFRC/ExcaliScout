@@ -31,7 +31,7 @@ function App() {
 
     const sendDataToSheet = (value) => {
         value = removeUnwantedCharacters(value);
-        fetch('https://script.google.com/macros/s/AKfycbwioY-LyzbjBEdEcK-FLFm3y0go1ohxY7g1MJRcq3yJ0CeafO1TM4FqHUbUZTQAKbo-/exec', {
+        fetch('https://script.google.com/macros/s/AKfycbzxJmqZyvvPHM01FOFTnlGtUFxoslmNOJTUT0QccjLQsK5uQAHHhe_HfYFO2BxyK7Y_/exec', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
