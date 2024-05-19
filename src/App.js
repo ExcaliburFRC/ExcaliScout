@@ -36,6 +36,7 @@ function App() {
             headers: {
                 'Content-Type': 'application/json',
             },
+            mode: 'no-cors',
             body: JSON.stringify({ value: value })
         })
         .then(response => response.json())
