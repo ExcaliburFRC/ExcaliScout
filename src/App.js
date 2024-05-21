@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import QRCode from 'qrcode.react';
 import Navbar from './Navbar';
 import Login from './Pages/Login'; // Adjust the path based on your file structure
-import Home from './Home'; // Create a Home component or replace it with your main content component
+// import Home from './Home'; // Create a Home component or replace it with your main content component
 
 function App() {
     const [formData, setFormData] = useState({ Name: '', Team: '', Alliance: '', TeleNotes: '', checkboxes: Array(9).fill(false) });
@@ -56,10 +56,10 @@ function App() {
         <Router>
             <div>
                 <Navbar />
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route path="/login" component={Login} />
-                    <Route path="/scouting">
+                <Routes>
+                    {/* <Route path="/" element={<Home />} /> */}
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/scouting" element={
                         <div>
                             <br />
                             <form onSubmit={handleSubmit}>
@@ -90,8 +90,8 @@ function App() {
                                 <br />
                             </div>
                         </div>
-                    </Route>
-                </Switch>
+                    } />
+                </Routes>
             </div>
         </Router>
     );
