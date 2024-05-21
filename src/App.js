@@ -80,6 +80,8 @@ function App() {
             <h3>:למקרה שאין אינטרנט</h3>
             <div style={{textAlign: 'center'}}>
                 <QRCode value={barcodeData} size={150}/>
+                <br/>
+
             </div>
         </div>
     );

@@ -3,7 +3,7 @@ body {
 }
 
 .navbar {
-    background-color: #012265;
+    background-color: #d4af37;
     overflow: hidden;
     text-align: center;
 }
@@ -11,7 +11,7 @@ body {
 .navbar a {
     float: right;
     display: block;
-    color: #d4af37;
+    color: #012265;
     text-align: center;
     padding: 12px 25px;
     text-decoration: none;
