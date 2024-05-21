@@ -142,4 +142,8 @@ function getFieldLeft(index) {
     }
 }
 
+<<<<<<< HEAD
 export default App;
+=======
+export default App;
+>>>>>>> b5e9a25bfdcc329d652264f5fae635271612dcce
