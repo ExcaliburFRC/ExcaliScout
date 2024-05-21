@@ -81,7 +81,6 @@ function App() {
             <div style={{textAlign: 'center'}}>
                 <QRCode value={barcodeData} size={150}/>
             </div>
-            <br/>
         </div>
     );
 }
