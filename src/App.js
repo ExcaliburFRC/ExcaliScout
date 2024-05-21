@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import QRCode from 'qrcode.react';
 import Navbar from './Navbar';
+import Login from './Pages/Login'; // Adjust the path based on your file structure
+import Home from './Home'; // Create a Home component or replace it with your main content component
 
 function App() {
     const [formData, setFormData] = useState({ Name: '', Team: '', Alliance: '', TeleNotes: '', checkboxes: Array(9).fill(false) });
@@ -50,40 +53,47 @@ function App() {
     };
 
     return (
-        <div>
-            <Navbar />
-            <br/>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="Sname">:שם</label><br/>
-                <input type="text" id="Sname" name="Name" value={formData.Name} onChange={handleInputChange}/><br/>
-                <br/>
-                <label htmlFor="Team">:מספר קבוצה</label><br/>
-                <input type="number" id="Team" name="Team" value={formData.Team} onChange={handleInputChange}/><br/>
-                <br/>
-                <label htmlFor="Alliance">:ברית</label><br/>
-                <input type="text" id="Alliance" name="Alliance" value={formData.Alliance}
-                       onChange={handleInputChange}/>
-                <br/>
-                <br/>
+        <Router>
+            <div>
+                <Navbar />
+                <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route path="/login" component={Login} />
+                    <Route path="/scouting">
+                        <div>
+                            <br />
+                            <form onSubmit={handleSubmit}>
+                                <label htmlFor="Sname">:שם</label><br />
+                                <input type="text" id="Sname" name="Name" value={formData.Name} onChange={handleInputChange} /><br />
+                                <br />
+                                <label htmlFor="Team">:מספר קבוצה</label><br />
+                                <input type="number" id="Team" name="Team" value={formData.Team} onChange={handleInputChange} /><br />
+                                <br />
+                                <label htmlFor="Alliance">:ברית</label><br />
+                                <input type="text" id="Alliance" name="Alliance" value={formData.Alliance} onChange={handleInputChange} />
+                                <br />
+                                <br />
 
-                <label htmlFor="TeleNotes">:Teleopב Notes</label><br/>
-                <input type="number" id="TeleNotes" name="TeleNotes" value={formData.TeleNotes}
-                       onChange={handleInputChange}/><br/>
-                <br/>
-                <br/>
-                <button type="submit">שליחה</button>
-            </form>
-            <br/>
-            <h3>:באוטונומי Notes מספר </h3>
-            <Field formData={formData} handleCheckboxChange={handleCheckboxChange}/>
-            <br/>
-            <h3>:למקרה שאין אינטרנט</h3>
-            <div style={{textAlign: 'center'}}>
-                <QRCode value={barcodeData} size={150}/>
-                <br/>
-
+                                <label htmlFor="TeleNotes">:Teleopב Notes</label><br />
+                                <input type="number" id="TeleNotes" name="TeleNotes" value={formData.TeleNotes} onChange={handleInputChange} /><br />
+                                <br />
+                                <br />
+                                <button type="submit">שליחה</button>
+                            </form>
+                            <br />
+                            <h3>:באוטונומי Notes מספר </h3>
+                            <Field formData={formData} handleCheckboxChange={handleCheckboxChange} />
+                            <br />
+                            <h3>:למקרה שאין אינטרנט</h3>
+                            <div style={{ textAlign: 'center' }}>
+                                <QRCode value={barcodeData} size={150} />
+                                <br />
+                            </div>
+                        </div>
+                    </Route>
+                </Switch>
             </div>
-        </div>
+        </Router>
     );
 }
 
@@ -92,7 +102,7 @@ function Field({ formData, handleCheckboxChange }) {
         <div style={{ position: 'relative' }}>
             <img
                 src="https://www.chiefdelphi.com/uploads/default/original/3X/a/a/aa745548020a507cf4a07051dcd0faa446607840.png"
-                alt="Field Image" className="center"/>
+                alt="Field Image" className="center" />
             {formData.checkboxes.map((checked, index) => (
                 <div key={index} style={{ position: 'absolute', top: `${getFieldTop(index)}%`, left: `${getFieldLeft(index)}%` }}>
                     <input type="checkbox" checked={checked} onChange={() => handleCheckboxChange(index)} />
@@ -142,8 +152,4 @@ function getFieldLeft(index) {
     }
 }
 
-<<<<<<< HEAD
 export default App;
-=======
-export default App;
->>>>>>> b5e9a25bfdcc329d652264f5fae635271612dcce
