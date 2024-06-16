@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import QRCode from "qrcode.react";
+import "./Scouting.css";
+import Navbar  from "../Navbar/Navbar";
 
 function ScoutingForm() {
     const [formData, setFormData] = useState({ Name: '', Team: '', Alliance: '', TeleNotes: '', checkboxes: Array(9).fill(false) });
@@ -50,35 +52,36 @@ function ScoutingForm() {
 
     return (
         <div>
-            <br />
+            <Navbar></Navbar>
+            <br/>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="Sname">:שם</label><br />
-                <input type="text" id="Sname" name="Name" value={formData.Name} onChange={handleInputChange} /><br />
-                <br />
-                <label htmlFor="Team">:מספר קבוצה</label><br />
-                <input type="number" id="Team" name="Team" value={formData.Team} onChange={handleInputChange} /><br />
-                <br />
-                <label htmlFor="Alliance">:ברית</label><br />
-                <input type="text" id="Alliance" name="Alliance" value={formData.Alliance} onChange={handleInputChange} />
-                <br />
-                <br />
-                <label htmlFor="TeleNotes">:Teleopב Notes</label><br />
-                <input type="number" id="TeleNotes" name="TeleNotes" value={formData.TeleNotes} onChange={handleInputChange} /><br />
-                <br />
-                <br />
-                <button type="submit">שליחה</button>
+                <label htmlFor="Sname">Name:</label><br/>
+                <input type="text" id="Sname" name="Name" value={formData.Name} onChange={handleInputChange}/><br/>
+                <br/>
+                <label htmlFor="Team">Team Number:</label><br/>
+                <input type="number" id="Team" name="Team" value={formData.Team} onChange={handleInputChange}/><br/>
+                <br/>
+                <label htmlFor="Alliance">:Alliance:</label><br/>
+                <input type="text" id="Alliance" name="Alliance" value={formData.Alliance}
+                       onChange={handleInputChange}/>
+                <br/>
+                <br/>
+                <label htmlFor="TeleNotes">Notes in Teleop:</label><br/>
+                <input type="number" id="TeleNotes" name="TeleNotes" value={formData.TeleNotes}
+                       onChange={handleInputChange}/><br/>
             </form>
-            <br />
-            <h3>:באוטונומי Notes מספר </h3>
-            <Field formData={formData} handleCheckboxChange={handleCheckboxChange} />
-            <br />
-            <h3>:למקרה שאין אינטרנט</h3>
-            <QRCodeSection barcodeData={barcodeData} />
+            <br/>
+            <h3>Auto Notes:</h3>
+            <Field formData={formData} handleCheckboxChange={handleCheckboxChange}/>
+            <br/>
+            <button type="submit">Submit</button>
+            <h3>If there is no Wifi:</h3>
+            <QRCodeSection barcodeData={barcodeData}/>
         </div>
     );
 }
 
-function Field({ formData, handleCheckboxChange }) {
+function Field({formData, handleCheckboxChange }) {
     return (
         <div style={{ position: 'relative' }}>
             <img
@@ -93,6 +96,7 @@ function Field({ formData, handleCheckboxChange }) {
     );
 }
 
+
 function getFieldTop(index) {
     switch (index) {
         case 0:
@@ -100,7 +104,7 @@ function getFieldTop(index) {
         case 1:
             return 34.1;
         case 2:
-            return 49;
+            return 46.8;
         case 3:
             return 13.5;
         case 4:
