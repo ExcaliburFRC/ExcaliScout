@@ -54,26 +54,37 @@ function ScoutingForm() {
         <div>
             <Navbar></Navbar>
             <br/>
+
             <form onSubmit={handleSubmit}>
                 <label htmlFor="Sname">Name:</label><br/>
                 <input type="text" id="Sname" name="Name" value={formData.Name} onChange={handleInputChange}/><br/>
                 <br/>
+
                 <label htmlFor="Team">Team Number:</label><br/>
                 <input type="number" id="Team" name="Team" value={formData.Team} onChange={handleInputChange}/><br/>
                 <br/>
-                <label htmlFor="Alliance">:Alliance:</label><br/>
+
+                <label htmlFor="Alliance">Alliance:</label><br/>
                 <input type="text" id="Alliance" name="Alliance" value={formData.Alliance}
                        onChange={handleInputChange}/>
                 <br/>
-                <br/>
-                <label htmlFor="TeleNotes">Notes in Teleop:</label><br/>
-                <input type="number" id="TeleNotes" name="TeleNotes" value={formData.TeleNotes}
-                       onChange={handleInputChange}/><br/>
             </form>
+
             <br/>
-            <h3>Auto Notes:</h3>
+
+            <h3 style={{color: 'black'}}>Turn your phone sideways to work comfortably with the map.</h3>
+
+            <h3>Map for scouting:</h3>
+            <div className="button-container">
+                <button type="button" className="resizable-button">Endgame</button>
+                <button type="button" className="resizable-button">Teleop</button>
+                <button type="button" className="resizable-button">Autonomous</button>
+
+            </div>
+            <br/>
             <Field formData={formData} handleCheckboxChange={handleCheckboxChange}/>
             <br/>
+
             <button type="submit">Submit</button>
             <h3>If there is no Wifi:</h3>
             <QRCodeSection barcodeData={barcodeData}/>
@@ -81,61 +92,16 @@ function ScoutingForm() {
     );
 }
 
-function Field({formData, handleCheckboxChange }) {
+function Field({formData, handleCheckboxChange}) {
     return (
-        <div style={{ position: 'relative' }}>
+        <div style={{position: 'relative'}}>
             <img
                 src="https://www.chiefdelphi.com/uploads/default/original/3X/a/a/aa745548020a507cf4a07051dcd0faa446607840.png"
                 alt="Field Image" className="center" />
-            {formData.checkboxes.map((checked, index) => (
-                <div key={index} style={{ position: 'absolute', top: `${getFieldTop(index)}%`, left: `${getFieldLeft(index)}%` }}>
-                    <input type="checkbox" checked={checked} onChange={() => handleCheckboxChange(index)} />
-                </div>
-            ))}
         </div>
     );
 }
 
-
-function getFieldTop(index) {
-    switch (index) {
-        case 0:
-            return 19.1;
-        case 1:
-            return 34.1;
-        case 2:
-            return 46.8;
-        case 3:
-            return 13.5;
-        case 4:
-            return 30.9;
-        case 5:
-            return 48.2;
-        case 6:
-            return 65.5;
-        case 7:
-            return 82.6;
-        case 8:
-            return 30.9;
-        default:
-            return 0;
-    }
-}
-
-function getFieldLeft(index) {
-    switch (index) {
-        case 0:
-        case 1:
-        case 2: return 69.26;
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-        case 8: return 46.8;
-        default: return 0;
-    }
-}
 
 function QRCodeSection({ barcodeData }) {
     return (
@@ -146,4 +112,13 @@ function QRCodeSection({ barcodeData }) {
     );
 }
 
+function Button(Mergin) {
+    const buttonStyle = {
+        margin: {Mergin}
+    };
+
+    return (
+        <button style={buttonStyle}>Hey</button>
+    );
+}
 export default ScoutingForm;

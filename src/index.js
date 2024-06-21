@@ -5,7 +5,6 @@ import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-//Run this file to start the APP
 
 root.render(
   <React.StrictMode>
@@ -13,5 +12,4 @@ root.render(
   </React.StrictMode>
 );
 
-//Created by Amit Sucher and Ori Korngut
 
