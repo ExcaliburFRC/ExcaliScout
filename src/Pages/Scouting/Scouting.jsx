@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import QRCode from "qrcode.react";
 import "./Scouting.css";
 import Navbar  from "../Navbar/Navbar";
+import Field from "./Game/Autonomus";
 
 function ScoutingForm() {
     const [formData, setFormData] = useState({ Name: '', Team: '', Alliance: '', TeleNotes: '', checkboxes: Array(9).fill(false) });
@@ -94,48 +95,6 @@ function ScoutingForm() {
 }
 
 
-function Field({ formData, handleCheckboxChange }) {
-    const [checkboxes] = useState([
-        { x: 49, y: 67 },
-        { x: 49, y: 84 },
-        { x: 49, y: 50 },
-        { x: 49, y: 32 },
-        { x: 49, y: 15 },
-        { x: 61, y: 48 },
-        { x: 61, y: 35 },
-        { x: 61, y: 18 },
-
-    ]);
-
-    return (
-        <div style={{ position: 'relative' }}>
-            <div style={{ position: 'relative', maxWidth: '100%', height: 'auto' }}>
-                <img
-                    src="https://www.chiefdelphi.com/uploads/default/original/3X/a/a/aa745548020a507cf4a07051dcd0faa446607840.png"
-                    alt="Field Image"
-                    className="center"
-                    style={{ maxWidth: '100%', height: 'auto' }}
-                />
-
-                {checkboxes.map((checkbox, index) => (
-                    <div
-                        key={index}
-                        style={{
-                            position: 'absolute',
-                            left: `${checkbox.x}%`,
-                            top: `${checkbox.y}%`,
-                        }}
-                    >
-                        <input
-                            type="checkbox"
-                            onChange={(e) => handleCheckboxChange(e, checkbox)}
-                        />
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-}
 
 function QRCodeSection({ barcodeData }) {
     return (
@@ -155,9 +114,5 @@ function Button(Mergin) {
         <button style={buttonStyle}>Hey</button>
     );
 }
-
-
-
-
 
 export default ScoutingForm;
