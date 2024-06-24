@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import QRCode from "qrcode.react";
 import "./Scouting.css";
-import Navbar  from "../Navbar/Navbar";
-import Field from "./Game/Autonomus";
+import Navbar from "../Navbar/Navbar";
+import TeleField from "./Game/Teleop";
+import AutoField from "./Game/Autonomus";
 
 function ScoutingForm() {
     const [formData, setFormData] = useState({ Name: '', Team: '', Alliance: '', TeleNotes: '', checkboxes: Array(9).fill(false) });
     const [barcodeData, setBarcodeData] = useState('');
+    const [activeField, setActiveField] = useState(null);
 
     useEffect(() => {
         const generateBarcode = () => {
@@ -48,53 +50,62 @@ function ScoutingForm() {
     };
 
     const removeUnwantedCharacters = (value) => {
-        return value.replace(/[\{\}\[\]]/g, '');
+        return value.replace(/[{}\[\]]/g, '');
+    };
+
+    const handleAutoClick = () => {
+        setActiveField('auto');
+    };
+
+    const handleTeleopClick = () => {
+        setActiveField('teleop');
     };
 
     return (
         <div>
             <Navbar></Navbar>
-            <br/>
+            <br />
 
             <form onSubmit={handleSubmit}>
-                <label htmlFor="Sname">Name:</label><br/>
-                <input type="text" id="Sname" name="Name" value={formData.Name} onChange={handleInputChange}/><br/>
-                <br/>
+                <label htmlFor="Sname">Name:</label><br />
+                <input type="text" id="Sname" name="Name" value={formData.Name} onChange={handleInputChange} /><br />
+                <br />
 
-                <label htmlFor="Team">Team Number:</label><br/>
-                <input type="number" id="Team" name="Team" value={formData.Team} onChange={handleInputChange}/><br/>
-                <br/>
+                <label htmlFor="Team">Team Number:</label><br />
+                <input type="number" id="Team" name="Team" value={formData.Team} onChange={handleInputChange} /><br />
+                <br />
 
-                <label htmlFor="Alliance">Alliance:</label><br/>
+                <label htmlFor="Alliance">Alliance:</label><br />
                 <input type="text" id="Alliance" name="Alliance" value={formData.Alliance}
-                       onChange={handleInputChange}/>
-                <br/>
+                       onChange={handleInputChange} />
+                <br />
             </form>
 
-            <br/>
+            <br />
 
-            <h3 style={{color: 'black'}}>Turn your phone sideways to work comfortably with the map.</h3>
+            <h3 style={{ color: 'black' }}>Turn your phone sideways to work comfortably with the map.</h3>
 
             <h3>Map for scouting:</h3>
 
             <div className="button-container">
-                <button type="button" className="resizable-button">Endgame</button>
-                <button type="button" className="resizable-button">Teleop</button>
-                <button type="button" className="resizable-button" >Autonomous</button>
-
+                <button type="button" className="resizable-button" >Endgame</button>
+                <button type="button" className="resizable-button" onClick={handleTeleopClick}>Teleop</button>
+                <button type="button" className="resizable-button" onClick={handleAutoClick}>Autonomus</button>
             </div>
+
             <br/>
-            <Field formData={formData} handleCheckboxChange={handleCheckboxChange}/>
-            <br/>
+
+            {activeField === 'teleop' && <TeleField formData={formData} handleCheckboxChange={handleCheckboxChange} />}
+            {activeField === 'auto' && <AutoField formData={formData} handleCheckboxChange={handleCheckboxChange} />}
+
+            <br />
 
             <button type="submit">Submit</button>
             <h3>If there is no Wifi:</h3>
-            <QRCodeSection barcodeData={barcodeData}/>
+            <QRCodeSection barcodeData={barcodeData} />
         </div>
     );
 }
-
-
 
 function QRCodeSection({ barcodeData }) {
     return (
@@ -102,16 +113,6 @@ function QRCodeSection({ barcodeData }) {
             <QRCode value={barcodeData} size={150} />
             <br />
         </div>
-    );
-}
-
-function Button(Mergin) {
-    const buttonStyle = {
-        margin: {Mergin}
-    };
-
-    return (
-        <button style={buttonStyle}>Hey</button>
     );
 }
 

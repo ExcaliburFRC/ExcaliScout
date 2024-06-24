@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 
-function Field({ handleCheckboxChange }) {
+function AutoField({ handleCheckboxChange }) {
     const [checkboxes] = useState([
         { x: 49.95, y: 70.5 },
         { x: 49.95, y: 87.7 },
         { x: 49.95, y: 53.2 },
         { x: 49.95, y: 36.1 },
         { x: 49.95, y: 18.8 },
-        { x: 68.8, y: 53.2 },
-        { x: 68.8, y: 38.3 },
-        { x: 68.8, y: 23.4 },
+        { x: 73.8, y: 53.2 },
+        { x: 73.8, y: 38.3 },
+        { x: 73.8, y: 23.4 },
     ]);
 
     const imageRef = useRef(null);
@@ -41,12 +41,12 @@ function Field({ handleCheckboxChange }) {
     }, [checkboxes]);
 
     return (
-        <div style={{ position: 'relative' }}>
+        <div style={{ position: 'relative', width: '100%', maxWidth: '1000px', margin: '0 auto' }}>
             <img
                 ref={imageRef}
                 src="https://www.chiefdelphi.com/uploads/default/original/3X/a/a/aa745548020a507cf4a07051dcd0faa446607840.png"
                 alt="Field Image"
-                style={{ maxWidth: '79%', height: '800', display: 'block' }}
+                style={{ width: '100%', height: 'auto', display: 'block' }}
             />
 
             {checkboxPositions.map((position, index) => (
@@ -69,4 +69,4 @@ function Field({ handleCheckboxChange }) {
     );
 }
 
-export default Field;
+export default AutoField;
