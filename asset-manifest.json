@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/ExcaliScout/static/css/main.b6a843c5.css",
-    "main.js": "/ExcaliScout/static/js/main.2e20d5e8.js",
+    "main.css": "/ExcaliScout/static/css/main.d0920d06.css",
+    "main.js": "/ExcaliScout/static/js/main.8c94c958.js",
     "index.html": "/ExcaliScout/index.html",
-    "main.b6a843c5.css.map": "/ExcaliScout/static/css/main.b6a843c5.css.map",
-    "main.2e20d5e8.js.map": "/ExcaliScout/static/js/main.2e20d5e8.js.map"
+    "main.d0920d06.css.map": "/ExcaliScout/static/css/main.d0920d06.css.map",
+    "main.8c94c958.js.map": "/ExcaliScout/static/js/main.8c94c958.js.map"
   },
   "entrypoints": [
-    "static/css/main.b6a843c5.css",
-    "static/js/main.2e20d5e8.js"
+    "static/css/main.d0920d06.css",
+    "static/js/main.8c94c958.js"
   ]
 }
