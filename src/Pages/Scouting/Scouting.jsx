@@ -3,17 +3,30 @@ import QRCode from "qrcode.react";
 import "./Scouting.css";
 import Navbar from "../Navbar/Navbar";
 import TeleField from "./Game/Teleop";
-import AutoField from "./Game/Autonomus";
+import Papa from "papaparse";
 
 function ScoutingForm() {
-    const [formData, setFormData] = useState({ Name: '', Team: '', Alliance: '', TeleNotes: '', checkboxes: Array(9).fill(false) });
+    const [formData, setFormData] = useState({
+        Name: '',
+        Team: '',
+        Alliance: '',
+        TeleNotes: '',
+        checkboxes: Array(9).fill(false),
+        TelePoints: []
+    });
     const [barcodeData, setBarcodeData] = useState('');
-    const [activeField, setActiveField] = useState(null);
 
     useEffect(() => {
         const generateBarcode = () => {
-            return JSON.stringify(formData);
+            const telePointsCSV = Papa.unparse(formData.TelePoints.map(point => ({
+                x: point.x.toFixed(2),
+                y: point.y.toFixed(2),
+                color: point.color === 1 ? 'G' : 'O'
+            })));
+            const barcodeString = `${formData.Name},${formData.Alliance},${formData.Team},${telePointsCSV}`;
+            return barcodeString;
         };
+
 
         setBarcodeData(generateBarcode());
     }, [formData]);
@@ -36,7 +49,7 @@ function ScoutingForm() {
 
     const sendDataToSheet = (value) => {
         value = removeUnwantedCharacters(value);
-        fetch('https://script.google.com/macros/s/AKfycbzxJmqZyvvPHM01FOFTnlGtUFxoslmNOJTUT0QccjLQsK5uQAHHhe_HfYFO2BxyK7Y_/exec', {
+        fetch('httpsscript.google.com/macros/s/AKfycbzxJmqZyvvPHM01FOFTnlGtUFxoslmNOJTUT0QccjLQsK5uQAHHhe_HfYFO2BxyK7Y_/exec', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -54,16 +67,14 @@ function ScoutingForm() {
     };
 
     const handleAutoClick = () => {
-        setActiveField('auto');
     };
 
     const handleTeleopClick = () => {
-        setActiveField('teleop');
     };
 
     return (
         <div>
-            <Navbar></Navbar>
+            <Navbar />
             <br />
 
             <form onSubmit={handleSubmit}>
@@ -76,8 +87,7 @@ function ScoutingForm() {
                 <br />
 
                 <label htmlFor="Alliance">Alliance:</label><br />
-                <input type="text" id="Alliance" name="Alliance" value={formData.Alliance}
-                       onChange={handleInputChange} />
+                <input type="text" id="Alliance" name="Alliance" value={formData.Alliance} onChange={handleInputChange} />
                 <br />
             </form>
 
@@ -88,19 +98,18 @@ function ScoutingForm() {
             <h3>Map for scouting:</h3>
 
             <div className="button-container">
-                <button type="button" className="resizable-button" >Endgame</button>
+                <button type="button" className="resizable-button">Endgame</button>
                 <button type="button" className="resizable-button" onClick={handleTeleopClick}>Teleop</button>
                 <button type="button" className="resizable-button" onClick={handleAutoClick}>Autonomus</button>
             </div>
 
-            <br/>
+            <br />
 
-            {activeField === 'teleop' && <TeleField formData={formData} handleCheckboxChange={handleCheckboxChange} />}
-            {activeField === 'auto' && <AutoField formData={formData} handleCheckboxChange={handleCheckboxChange} />}
+            <TeleField formData={formData} setFormData={setFormData} />
 
             <br />
 
-            <button type="submit">Submit</button>
+            <button type="submit" onClick={handleSubmit}>Submit</button>
             <h3>If there is no Wifi:</h3>
             <QRCodeSection barcodeData={barcodeData} />
         </div>
@@ -111,7 +120,6 @@ function QRCodeSection({ barcodeData }) {
     return (
         <div style={{ textAlign: 'center' }}>
             <QRCode value={barcodeData} size={150} />
-            <br />
         </div>
     );
 }

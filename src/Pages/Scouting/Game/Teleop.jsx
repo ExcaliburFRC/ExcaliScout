@@ -1,29 +1,60 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import Papa from "papaparse";
 
-function TeleField({ handleCheckboxChange }) {
-    const [dotColor, setDotColor] = useState('green');
-    const [dotPositions, setDotPositions] = useState([]);
+function TeleField({ formData, setFormData }) {
+    const [dotColor, setDotColor] = useState(1);
+    const [pointPositions, setPointPositions] = useState([]);
+    const [barcodeData, setBarcodeData] = useState('');
+
     const imageRef = useRef(null);
+
+    useEffect(() => {
+        const generateBarcode = () => {
+            const telePointsCSV = Papa.unparse(pointPositions.map(point => ({
+                x: point.x.toFixed(2),
+                y: point.y.toFixed(2),
+                color: point.color === 1 ? 'G' : 'O'
+            })));
+            const barcodeString = `${formData.Name},${formData.Alliance},${formData.Team},${telePointsCSV}`;
+            return barcodeString;
+        };
+
+        setBarcodeData(generateBarcode());
+    }, [formData, pointPositions]);
 
     const handleImageClick = (event) => {
         const imageElement = imageRef.current;
         if (!imageElement) return;
 
         const rect = imageElement.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / rect.width * 100;
-        const y = (event.clientY - rect.top) / rect.height * 100;
+        const x = parseFloat(((event.clientX - rect.left) / rect.width * 100).toFixed(2));
+        const y = parseFloat(((event.clientY - rect.top) / rect.height * 100).toFixed(2));
 
-        const position = {
+        const newPoint = {
             x,
             y,
             color: dotColor,
         };
 
-        setDotPositions([...dotPositions, position]);
+        setPointPositions([...pointPositions, newPoint]);
+
+        setFormData(prevState => ({
+            ...prevState,
+            TelePoints: [...prevState.TelePoints, newPoint]
+        }));
     };
 
     const toggleDotColor = () => {
-        setDotColor(dotColor === 'green' ? 'orange' : 'green');
+        setDotColor(dotColor === 1 ? 2 : 1);
+    };
+
+    const exportCSV = () => {
+        const csvData = Papa.unparse(pointPositions.map(point => ({
+            x: point.x.toFixed(2),
+            y: point.y.toFixed(2),
+            color: point.color === 1 ? 'green' : 'orange'
+        })));
+        return csvData;
     };
 
     return (
@@ -36,13 +67,13 @@ function TeleField({ handleCheckboxChange }) {
                 onClick={handleImageClick}
             />
 
-            {dotPositions.map((position, index) => (
+            {pointPositions.map((point, index) => (
                 <div
                     key={index}
                     style={{
                         position: 'absolute',
-                        left: `${position.x}%`,
-                        top: `${position.y}%`,
+                        left: `${point.x}%`,
+                        top: `${point.y}%`,
                         transform: 'translate(-50%, -50%)',
                     }}
                 >
@@ -51,7 +82,9 @@ function TeleField({ handleCheckboxChange }) {
                             width: '10px',
                             height: '10px',
                             borderRadius: '50%',
-                            backgroundColor: position.color,
+                            backgroundColor: point.color === 1 ? 'green' : 'orange',
+                            position: 'absolute',
+                            transform: 'translate(-50%, -50%)',
                         }}
                     />
                 </div>
@@ -60,6 +93,14 @@ function TeleField({ handleCheckboxChange }) {
             <button onClick={toggleDotColor} style={{ position: 'absolute', top: '10px', left: '10px', zIndex: '10' }}>
                 Change Mode
             </button>
+
+            <button onClick={() => {
+                const csvData = exportCSV();
+                console.log(csvData);
+            }} style={{ position: 'absolute', top: '50px', left: '10px', zIndex: '10' }}>
+                Export CSV
+            </button>
+
         </div>
     );
 }
