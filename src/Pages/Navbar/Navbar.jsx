@@ -6,6 +6,10 @@ function Navbar() {
         window.location.href = '/Scouting';
     };
 
+    const handleClickScoutNav = () => {
+        window.location.href = '/Scouting/ScoutNav';
+    };
+
     const handleClickLogin = () => {
         window.location.href = '/Login';
     };
@@ -13,7 +17,7 @@ function Navbar() {
     return (
         <div className="navbar">
             <a href="/">Home</a>
-            <a onClick={handleClickScout}>Scout</a>
+            <a onClick={handleClickScoutNav}>Scout</a>
             <a onClick={handleClickLogin}>Login</a>
             <a href="#Simbucks">Simbucks</a>
         </div>

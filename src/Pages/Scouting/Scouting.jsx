@@ -18,11 +18,7 @@ function ScoutingForm() {
 
     useEffect(() => {
         const generateBarcode = () => {
-            const telePointsCSV = Papa.unparse(formData.TelePoints.map(point => ({
-                x: point.x.toFixed(2),
-                y: point.y.toFixed(2),
-                color: point.color === 1 ? 'G' : 'O'
-            })));
+            const telePointsCSV = formData.TelePoints.map(point => `(${point.x.toFixed(2)},${point.y.toFixed(2)},${point.color === 1 ? 'O' : 'G'})`).join(' ');
             const barcodeString = `${formData.Name},${formData.Alliance},${formData.Team},${telePointsCSV}`;
             return barcodeString;
         };
@@ -112,6 +108,7 @@ function ScoutingForm() {
             <button type="submit" onClick={handleSubmit}>Submit</button>
             <h3>If there is no Wifi:</h3>
             <QRCodeSection barcodeData={barcodeData} />
+            <br/>
         </div>
     );
 }

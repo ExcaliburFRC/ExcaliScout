@@ -10,11 +10,7 @@ function TeleField({ formData, setFormData }) {
 
     useEffect(() => {
         const generateBarcode = () => {
-            const telePointsCSV = Papa.unparse(pointPositions.map(point => ({
-                x: point.x.toFixed(2),
-                y: point.y.toFixed(2),
-                color: point.color === 1 ? 'G' : 'O'
-            })));
+            const telePointsCSV = pointPositions.map(point => `${point.x.toFixed(2)}[${point.y.toFixed(2)}]`).join(',');
             const barcodeString = `${formData.Name},${formData.Alliance},${formData.Team},${telePointsCSV}`;
             return barcodeString;
         };
@@ -49,13 +45,10 @@ function TeleField({ formData, setFormData }) {
     };
 
     const exportCSV = () => {
-        const csvData = Papa.unparse(pointPositions.map(point => ({
-            x: point.x.toFixed(2),
-            y: point.y.toFixed(2),
-            color: point.color === 1 ? 'green' : 'orange'
-        })));
+        const csvData = pointPositions.map(point => `(${point.x.toFixed(2)},${point.y.toFixed(2)},${point.color === 1 ? 'O' : 'G'})`).join(' ');
         return csvData;
     };
+
 
     return (
         <div style={{ position: 'relative', width: '100%', maxWidth: '1000px', margin: '0 auto' }}>
