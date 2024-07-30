@@ -95,19 +95,16 @@ def get_match_assignments():
 
     match_list = []
     for match in matches:
+        scouter_index = [match[2], match[4], match[6], match[8], match[10], match[12]].index(int(user_id))
+        team_number = match[3 + scouter_index * 2]
         match_list.append({
-            'id': match[0],
             'match_id': match[1],
-            'scouter1': match[2],
-            'scouter2': match[3],
-            'scouter3': match[4],
-            'scouter4': match[5],
-            'scouter5': match[6],
-            'scouter6': match[7]
+            'scouter': user_id,
+            'team_number': team_number,
+            'alliance': 'Red' if scouter_index < 3 else 'Blue'
         })
 
     return jsonify({'status': 'success', 'matches': match_list})
-
 
 @app.route('/manual_assign', methods=['POST'])
 def manual_assign():

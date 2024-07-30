@@ -23,7 +23,7 @@ function MyMatches() {
     }, [user]);
 
     return (
-        <div>
+        <div className="container">
             <h2>My Matches</h2>
             <table>
                 <thead>
@@ -31,7 +31,6 @@ function MyMatches() {
                         <th>Match Number</th>
                         <th>Scouter</th>
                         <th>Alliance</th>
-                        <th>Robot</th>
                         <th>Team Number</th>
                         <th>Actions</th>
                     </tr>
@@ -42,8 +41,7 @@ function MyMatches() {
                             <td>{match.match_id}</td>
                             <td>{user.username}</td>
                             <td>{match.alliance}</td>
-                            <td>{match.robot}</td>
-                            <td>{match[`team${match.robot + 1}`]}</td>
+                            <td>{match.team_number}</td>
                             <td>
                                 <button onClick={() => navigate(`/scout/${match.match_id}`, { state: { match, user } })}>Scout Now</button>
                             </td>
