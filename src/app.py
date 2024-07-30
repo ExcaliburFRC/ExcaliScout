@@ -8,6 +8,8 @@ CORS(app)
 TBA_API_KEY = 'DGOg0BIAQjm8EO3EkO50txFeLxpklBtotoW9qnHxUzoeecJIlRzOz8CsgNjZ4fyO'
 EVENT_KEY = '2024isde2'
 
+def generate_user_id():
+    return random.randint(100000, 999999)
 
 def query_db(query, args=(), one=False):
     con = sqlite3.connect('frc_scouting.db')
@@ -149,9 +151,53 @@ def get_user_matches():
 
 @app.route('/users', methods=['GET'])
 def get_users():
-    users = query_db('SELECT user_id, username FROM users WHERE role LIKE "%Scouter%"')
-    return jsonify({'status': 'success', 'users': [{'user_id': user[0], 'username': user[1]} for user in users]})
+    users = query_db('SELECT user_id, username, role FROM users')
+    return jsonify({'status': 'success', 'users': [{'user_id': user[0], 'username': user[1], 'role': user[2]} for user in users]})
 
 
+@app.route('/add_user', methods=['POST'])
+def add_user():
+    data = request.json
+    user_id = generate_user_id()
+    username = data['username']
+    password = data['password']
+    role = data['role']
+
+    conn = sqlite3.connect('frc_scouting.db')
+    c = conn.cursor()
+    c.execute('INSERT INTO users (user_id, username, password, role) VALUES (?, ?, ?, ?)', (user_id, username, password, role))
+    conn.commit()
+    conn.close()
+
+    return jsonify({'status': 'success', 'message': 'User added successfully'})
+
+
+@app.route('/delete_user', methods=['POST'])
+def delete_user():
+    data = request.json
+    user_id = data['user_id']
+
+    conn = sqlite3.connect('frc_scouting.db')
+    c = conn.cursor()
+    c.execute('DELETE FROM users WHERE user_id = ?', (user_id,))
+    conn.commit()
+    conn.close()
+
+    return jsonify({'status': 'success', 'message': 'User deleted successfully'})
+
+
+@app.route('/update_user', methods=['POST'])
+def update_user():
+    data = request.json
+    user_id = data['user_id']
+    role = data['role']
+
+    conn = sqlite3.connect('frc_scouting.db')
+    c = conn.cursor()
+    c.execute('UPDATE users SET role = ? WHERE user_id = ?', (role, user_id))
+    conn.commit()
+    conn.close()
+
+    return jsonify({'status': 'success', 'message': 'User role updated successfully'})
 if __name__ == '__main__':
     app.run(debug=True)

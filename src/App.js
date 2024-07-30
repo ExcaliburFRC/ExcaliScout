@@ -4,6 +4,7 @@ import Login from './Pages/Login/Login';
 import MyMatches from './Pages/MyMatches/MyMatches';
 import ScoutingForm from './Pages/Scouting/Scouting';
 import MatchAssign from './Pages/MatchAssign/MatchAssign';
+import ManageUsers from './Pages/ManageUsers/ManageUsers'; // Import the new component
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                 <Route path="/assign" element={<MatchAssign />} />
                 <Route path="/my-matches" element={<MyMatches />} />
                 <Route path="/scout/:match_id" element={<ScoutingForm />} />
+                <Route path="/manage-users" element={<ManageUsers />} /> {/* Add the new route */}
             </Routes>
         </Router>
     );
