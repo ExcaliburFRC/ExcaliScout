@@ -1,6 +1,6 @@
-// src/components/Login/Login.jsx
-
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
 import Navbar from '../Navbar/Navbar';
 import './Login.css';
 
@@ -18,21 +18,34 @@ function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
+    const { setUser } = useContext(UserContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch('http://localhost:5000/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-        });
-        const data = await response.json();
-        if (data.status === 'success') {
-            setMessage(`Welcome, ${data.user.username}! Role: ${data.user.role}`);
-        } else {
-            setMessage(data.message);
+        try {
+            const response = await fetch('http://localhost:5000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            if (data.status === 'success') {
+                setUser(data.user);
+                navigate('/my-matches');  // Redirect to My Matches page
+            } else {
+                setMessage(data.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setMessage('Failed to login. Please try again later.');
         }
     };
 
@@ -67,3 +80,4 @@ function LoginForm() {
 }
 
 export default Login;
+// Compare this snippet from Navbar.jsx:

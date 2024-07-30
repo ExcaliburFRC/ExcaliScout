@@ -26,11 +26,11 @@ tbody td {
 }
 
 .red-alliance {
-    background-color: #ffcccc;
+    background-color: rgba(255, 0, 0, 0.1);
 }
 
 .blue-alliance {
-    background-color: #cceeff;
+    background-color: rgba(0, 0, 255, 0.1);
 }
 
 select {
