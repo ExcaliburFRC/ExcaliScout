@@ -8,11 +8,11 @@ import Papa from "papaparse";
 
 function ScoutingForm() {
     const location = useLocation();
-    const match = location.state || {};
+    const { match, user } = location.state || {};
     const [formData, setFormData] = useState({
-        Name: '',
-        Team: match.robot || '',
-        Alliance: match.alliance || '',
+        Name: user ? user.username : '',
+        Team: match ? match[`team${match.robot + 1}`] : '',
+        Alliance: match ? match.alliance : '',
         TeleNotes: '',
         checkboxes: Array(9).fill(false),
         TelePoints: []

@@ -43,11 +43,17 @@ def get_matches():
             'id': match[0],
             'match_id': match[1],
             'scouter1': match[2],
-            'scouter2': match[3],
-            'scouter3': match[4],
-            'scouter4': match[5],
-            'scouter5': match[6],
-            'scouter6': match[7]
+            'team1': match[3],
+            'scouter2': match[4],
+            'team2': match[5],
+            'scouter3': match[6],
+            'team3': match[7],
+            'scouter4': match[8],
+            'team4': match[9],
+            'scouter5': match[10],
+            'team5': match[11],
+            'scouter6': match[12],
+            'team6': match[13]
         })
 
     return jsonify({'status': 'success', 'matches': match_list})
@@ -58,20 +64,20 @@ def assign_scouts():
     data = request.json
     match_id = data['match_id']
     scouters = data['scouters']
+    teams = data['teams']
 
-    if len(scouters) != 6:
-        return jsonify({'status': 'failure', 'message': 'Exactly 6 scouters are required'}), 400
+    if len(scouters) != 6 or len(teams) != 6:
+        return jsonify({'status': 'failure', 'message': 'Exactly 6 scouters and 6 teams are required'}), 400
 
     conn = sqlite3.connect('frc_scouting.db')
     c = conn.cursor()
     c.execute(
-        'INSERT INTO matches (match_id, scouter1, scouter2, scouter3, scouter4, scouter5, scouter6) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        (match_id, *scouters))
+        'INSERT INTO matches (match_id, scouter1, team1, scouter2, team2, scouter3, team3, scouter4, team4, scouter5, team5, scouter6, team6) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        (match_id, scouters[0], teams[0], scouters[1], teams[1], scouters[2], teams[2], scouters[3], teams[3], scouters[4], teams[4], scouters[5], teams[5]))
     conn.commit()
     conn.close()
 
     return jsonify({'status': 'success', 'message': 'Scouters assigned successfully'})
-
 
 @app.route('/matches_assignments', methods=['GET'])
 def get_match_assignments():

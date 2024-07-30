@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import './MyMatches.css';
 
 function MyMatches() {
     const [matches, setMatches] = useState([]);
     const { user } = useContext(UserContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (user) {
@@ -30,6 +32,7 @@ function MyMatches() {
                         <th>Scouter</th>
                         <th>Alliance</th>
                         <th>Robot</th>
+                        <th>Team Number</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -40,8 +43,9 @@ function MyMatches() {
                             <td>{user.username}</td>
                             <td>{match.alliance}</td>
                             <td>{match.robot}</td>
+                            <td>{match[`team${match.robot + 1}`]}</td>
                             <td>
-                                <button onClick={() => navigate(`/scout/${match.match_id}`)}>Scout Now</button>
+                                <button onClick={() => navigate(`/scout/${match.match_id}`, { state: { match, user } })}>Scout Now</button>
                             </td>
                         </tr>
                     ))}

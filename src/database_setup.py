@@ -22,16 +22,22 @@ def setup_database():
                     password TEXT NOT NULL,
                     role TEXT NOT NULL)''')
 
-    # Create matches table
+    # Create matches table with team numbers
     c.execute('''CREATE TABLE IF NOT EXISTS matches (
                     id INTEGER PRIMARY KEY,
                     match_id INTEGER NOT NULL,
                     scouter1 INTEGER,
+                    team1 INTEGER,
                     scouter2 INTEGER,
+                    team2 INTEGER,
                     scouter3 INTEGER,
+                    team3 INTEGER,
                     scouter4 INTEGER,
+                    team4 INTEGER,
                     scouter5 INTEGER,
-                    scouter6 INTEGER)''')
+                    team5 INTEGER,
+                    scouter6 INTEGER,
+                    team6 INTEGER)''')
 
     # Insert sample users
     users = [
@@ -52,12 +58,18 @@ def setup_database():
 
     normal_scout_ids = [user[0] for user in users if user[3] == 'Normal Scouter']
 
-    for match in matches:
-        if 'qm' in match['comp_level']:  # Only consider qualification matches
-            scouters = random.sample(normal_scout_ids, 6)
+    # Filter and sort qualification matches by match number
+    qualification_matches = [match for match in matches if match['comp_level'] == 'qm']
+    qualification_matches.sort(key=lambda x: x['match_number'])
+
+    for match in qualification_matches[:60]:  # Limit to the first 60 matches
+        scouters = random.sample(normal_scout_ids, 6)
+        teams = [int(team_key[3:]) for team_key in match['alliances']['red']['team_keys']] + \
+                [int(team_key[3:]) for team_key in match['alliances']['blue']['team_keys']]
+        if len(teams) == 6:  # Ensure there are exactly 6 teams
             c.execute(
-                'INSERT INTO matches (match_id, scouter1, scouter2, scouter3, scouter4, scouter5, scouter6) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                (match['match_number'], *scouters))
+                'INSERT INTO matches (match_id, scouter1, team1, scouter2, team2, scouter3, team3, scouter4, team4, scouter5, team5, scouter6, team6) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                (match['match_number'], scouters[0], teams[0], scouters[1], teams[1], scouters[2], teams[2], scouters[3], teams[3], scouters[4], teams[4], scouters[5], teams[5]))
 
     conn.commit()
     conn.close()
