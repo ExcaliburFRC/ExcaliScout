@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from "../Navbar/Navbar.jsx";
-import "./ScoutNav.css"
+import Navbar from "C:/code/my-app/src/Pages/Navbar/Navbar.jsx";
+import "./PitScouting.css";
 
-function ScoutNav() {
+function PitScouting() {
     return (
         <div>
             <Navbar />
@@ -16,13 +16,9 @@ function ScoutNav() {
 function ScoutNavigate() {
     return (
         <div>
-            <h2>Select your Scouting Type:</h2>
+            <label htmlFor="Sname">Name:</label><br/>
+            <input type="text" id="Sname" name="Name"/><br/>
             <br/>
-            <button onClick={handleClickScout}>Regular Scout</button>
-            <br/>
-            <button>Pit Scout</button>
-            <br/>
-            <button>Super Scout</button>
         </div>
     );
 }
@@ -31,4 +27,4 @@ const handleClickScout = () => {
     window.location.href = '/Scouting';
 };
 
-export default ScoutNav;
+export default PitScouting;

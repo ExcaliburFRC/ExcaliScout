@@ -3,7 +3,6 @@ import QRCode from "qrcode.react";
 import "./Scouting.css";
 import Navbar from "../Navbar/Navbar";
 import TeleField from "./Game/Teleop";
-import Papa from "papaparse";
 
 function ScoutingForm() {
     const [formData, setFormData] = useState({
